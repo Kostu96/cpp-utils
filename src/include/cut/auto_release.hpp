@@ -7,7 +7,7 @@ namespace cut {
 
 template<typename T, typename Deleter, T Invalid = {}>
 class AutoRelease :
-    public NonCopyable {
+    NonCopyable {
 public:
     AutoRelease() noexcept :
         handle_(Invalid),
@@ -50,11 +50,7 @@ public:
     
     T release() noexcept { return std::exchange(handle_, Invalid); }
 
-    operator T() const noexcept { return handle_; }
-
     explicit operator bool() const noexcept { return handle_ != Invalid; }
-
-    //T* operator&() noexcept { return std::addressof(handle_); }
 private:
     T handle_;
     Deleter deleter_;
