@@ -26,7 +26,7 @@ public:
     T get() const noexcept { return handle_; }
     
     void reset(T v = Invalid) noexcept {
-        if (handle_ != Invalid && deleter_) {
+        if (deleter_) {
             deleter_(handle_);
         }
         handle_ = v;
