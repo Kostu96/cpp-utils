@@ -17,3 +17,5 @@ target_include_directories(cut INTERFACE src/include)
 if (UNIX)
     target_link_libraries(cut INTERFACE stdc++exp)
 endif()
+
+add_library(cut::cut ALIAS cut)
