@@ -19,7 +19,7 @@ private:
 };
 
 template<typename ...Args>
-void assert(bool predicate, std::format_string<Args...> msg, Args&& ...args) {
+void ensure(bool predicate, std::format_string<Args...> msg, Args&& ...args) {
     if (!predicate) {
         throw Exception(std::format(msg, std::forward<Args>(args)...), 1);
     }
