@@ -19,9 +19,9 @@ private:
 };
 
 template<typename ...Args>
-void ensure(bool predicate, std::format_string<Args...> msg, Args&& ...args) {
+void ensure(bool predicate, std::string_view msg, Args&& ...args) {
     if (!predicate) {
-        throw Exception(std::format(msg, std::forward<Args>(args)...), 1);
+        throw Exception(std::vformat(msg, std::make_format_args(args...)), 1);
     }
 }
 
