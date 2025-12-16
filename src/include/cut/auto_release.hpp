@@ -5,7 +5,7 @@
 
 namespace cut {
 
-template<typename T, typename Deleter, T Invalid = {}>
+template<typename T, typename Deleter = void(*)(T), T Invalid = {}>
 class AutoRelease :
     NonCopyable {
 public:
@@ -15,7 +15,7 @@ public:
     
     explicit AutoRelease(T v, Deleter d = {}) noexcept :
         handle_(v),
-        deleter_(d) {}
+        deleter_(std::move(d)) {}
 
     AutoRelease(AutoRelease&& other) noexcept :
         handle_(std::exchange(other.handle_, Invalid)),
