@@ -5,7 +5,8 @@
 
 namespace cut {
 
-template<typename T, typename Deleter = void(*)(T), T Invalid = {}>
+template<typename T, typename Deleter = void(*)(T), T Invalid = T{}>
+requires std::is_trivially_copyable_v<T>
 class AutoRelease :
     NonCopyable {
 public:
