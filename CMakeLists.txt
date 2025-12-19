@@ -7,6 +7,8 @@ add_library(cut INTERFACE
     src/include/cut/auto_release.hpp
     src/include/cut/exception.hpp
     src/include/cut/non_copyable.hpp
+    src/include/cut/overloaded.hpp
+    src/include/cut/string_map.hpp
     src/include/cut/types.hpp
 )
 

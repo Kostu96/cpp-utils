@@ -31,4 +31,4 @@ inline s64 to_s64(auto v) { return static_cast<s64>(v); }
 inline f32 to_f32(auto v) { return static_cast<f32>(v); }
 inline f64 to_f64(auto v) { return static_cast<f64>(v); }
 
-}
+} // namespace cut
