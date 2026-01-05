@@ -9,6 +9,7 @@ add_library(cut INTERFACE
     src/include/cut/non_copyable.hpp
     src/include/cut/overloaded.hpp
     src/include/cut/pass_key.hpp
+    src/include/cut/static_vector.hpp
     src/include/cut/string_map.hpp
     src/include/cut/types.hpp
 )
