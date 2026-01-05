@@ -8,11 +8,10 @@ add_library(cut INTERFACE
     src/include/cut/exception.hpp
     src/include/cut/non_copyable.hpp
     src/include/cut/overloaded.hpp
+    src/include/cut/pass_key.hpp
     src/include/cut/string_map.hpp
     src/include/cut/types.hpp
 )
-
-#target_compile_features(cut PRIVATE cxx_std_23)
 
 target_include_directories(cut INTERFACE src/include)
 
