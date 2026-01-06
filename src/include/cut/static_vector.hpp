@@ -24,28 +24,30 @@ public:
 
     T& operator[](std::size_t i) {
         cut::ensure(i < size_, "Index out of bounds: {}", i);
-        return *std::launder(reinterpret_cast<T*>(&storage_[i]));
+        void* slot = storage_ + i * sizeof(T);
+        return *std::launder(reinterpret_cast<T*>(slot));
     }
 
     const T& operator[](std::size_t i) const {
-        cut::ensure(i < size_, "Index out of bounds: {}", i);
-        return *std::launder(reinterpret_cast<const T*>(&storage_[i]));
+        return (*this)[i];
+        /*cut::ensure(i < size_, "Index out of bounds: {}", i);
+        return *std::launder(reinterpret_cast<const T*>(&storage_[i]));*/
     }
 
     template<typename ...Args>
     T& emplace_back(Args&& ...args) {
         cut::ensure(size_ < Capacity, "Storage overflow");
-        T* ptr = std::construct_at(
-            reinterpret_cast<T*>(&storage_[size_]),
-            std::forward<Args>(args)...);
+        void* slot = storage_ + size_ * sizeof(T);
+        T* ptr = std::construct_at(reinterpret_cast<T*>(slot), std::forward<Args>(args)...);
         ++size_;
         return *std::launder(ptr);
     }
 
     void pop_back() {
         cut::ensure(size_ > 0, "Storage is empty!");
-        std::destroy_at(&(*this)[size_ - 1]);
         --size_;
+        void* slot = storage_ + size_ * sizeof(T);
+        std::destroy_at(slot);
     }
 
     void clear() {
