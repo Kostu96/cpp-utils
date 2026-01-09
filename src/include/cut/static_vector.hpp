@@ -30,8 +30,6 @@ public:
 
     const T& operator[](std::size_t i) const {
         return (*this)[i];
-        /*cut::ensure(i < size_, "Index out of bounds: {}", i);
-        return *std::launder(reinterpret_cast<const T*>(&storage_[i]));*/
     }
 
     template<typename ...Args>
