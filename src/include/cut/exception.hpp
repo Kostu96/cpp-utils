@@ -3,6 +3,8 @@
 #include <stacktrace>
 #include <stdexcept>
 #include <string>
+#include <ranges>
+#include <filesystem>
 
 namespace cut {
 
@@ -34,6 +36,21 @@ struct std::formatter<cut::Exception> {
     }
 
     auto format(const cut::Exception& obj, std::format_context& ctx) const {
-        return std::format_to(ctx.out(), "Exception: {}\n{}", obj.what(), obj.stacktrace());
+        std::stringstream stream;
+        auto& stack = obj.stacktrace();
+        auto root = std::filesystem::current_path();
+        for (auto&& [idx, entry] : std::views::enumerate(stack)) {
+            std::string source_file = entry.source_file();
+            std::filesystem::path path{ source_file };
+            path = path.lexically_relative(root);
+            std::string path_str = !path.empty() ? path.string() : source_file;
+            if (!path_str.empty()) {
+                stream << std::format("{:2}> {}({}): {}\n", idx, path_str, entry.source_line(), entry.description());
+            }
+            else {
+                stream << std::format("{:2}> {}\n", idx, entry.description());
+            }
+        }
+        return std::format_to(ctx.out(), "Exception: {}\n{}", obj.what(), stream.view());
     }
 };
