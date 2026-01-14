@@ -43,9 +43,9 @@ public:
 
     void pop_back() {
         cut::ensure(size_ > 0, "Storage is empty!");
+        T& slot = (*this)[size_ - 1];
         --size_;
-        void* slot = storage_ + size_ * sizeof(T);
-        std::destroy_at(slot);
+        std::destroy_at(&slot);
     }
 
     void clear() {
