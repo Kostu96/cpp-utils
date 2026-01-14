@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.24)
 project(cut-proj LANGUAGES CXX)
 
 add_library(cut INTERFACE
-    CMakeLists.txt
     src/include/cut/auto_release.hpp
     src/include/cut/exception.hpp
     src/include/cut/non_copyable.hpp
